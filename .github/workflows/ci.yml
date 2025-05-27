@@ -1,7 +1,8 @@
-name: CI
+name: CI/CD
 
 on:
   pull_request:
+    branches: [ '*' ]
   push:
     branches: [ main ]
 
@@ -42,7 +43,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:11-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -75,3 +76,17 @@ jobs:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+Deploy:
+  if: ${{ github.event_name == "push" && github.ref == "refs/heads/main" }}
+  needs: Test # Test needs to be finish before run this
+  runs-n: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.14.15 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "blog-rails-vue-backend" #Must be unique in Heroku
+        heroku_email: "juandadazav@gmail.com"
