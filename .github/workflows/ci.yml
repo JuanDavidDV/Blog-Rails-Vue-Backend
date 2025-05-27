@@ -83,15 +83,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Heroku
-        uses: heroku/actions/setup@v1
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-
+      - uses: actions/checkout@v4
       - name: Deploy to Heroku
-        run: |
-          git remote add heroku https://git.heroku.com/blog-rails-vue-backend.git
-          git push heroku main
+        uses: akhileshns/heroku-deploy@v3.14.15 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "blog-rails-vue-backend" 
+          heroku_email: "juandadazav@gmail.com"
