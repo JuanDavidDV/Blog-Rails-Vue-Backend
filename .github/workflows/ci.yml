@@ -87,8 +87,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to Heroku
-        uses: heroku/deploy-via-git@v1
+        uses: amondnet/heroku-deploy@v3
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: blog-rails-vue-backend
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          branch: "main"
