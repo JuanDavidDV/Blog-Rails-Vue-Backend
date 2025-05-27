@@ -92,4 +92,5 @@ jobs:
           heroku_app_name: "blog-rails-vue-backend"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           usedocker: false 
+          dontautocreate: true
 
