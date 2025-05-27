@@ -77,7 +77,7 @@ jobs:
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
-  deploy:
+  Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: test
     runs-on: ubuntu-latest
@@ -86,10 +86,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Heroku
-        uses: amondnet/heroku-deploy@v3
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: blog-rails-vue-backend
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          branch: "main"
+      - name: Configure Git
+        run: |
+          git config --global user.email "${{ secrets.HEROKU_EMAIL }}"
+          git config --global user.name "GitHub Actions"
+
+      - name: Write Heroku credentials
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "machine git.heroku.com login \$HEROKU_API_KEY" >> ~/.netrc
+          chmod 600 ~/.netrc
+
+      - name: Add Heroku Git remote
+        run: git remote add heroku https://git.heroku.com/blog-rails-vue-backend.git
+
+      - name: Push to Heroku
+        run: git push heroku main --force
