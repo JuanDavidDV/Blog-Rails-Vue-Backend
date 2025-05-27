@@ -79,7 +79,7 @@ jobs:
 
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: test
+    needs: [scan_ruby, lint, test]
     runs-on: ubuntu-latest
 
     steps:

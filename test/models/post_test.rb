@@ -10,9 +10,8 @@ class PostTest < ActiveSupport::TestCase
     assert_not @post.valid?
   end
 
-  test "shoul be invalid without a body" do 
+  test "shoul be invalid without a body" do
     @post.body = ""
     assert_not @post.valid?
   end
-
 end
