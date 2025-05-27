@@ -12,3 +12,10 @@ posts = [
     body: "This is the body of post 3"
   }
 ]
+
+
+posts.each do |post| 
+  Post.find_or_create_by!(title: post[:title]) do |a|
+    a.body = post[:body]
+  end
+end
