@@ -80,7 +80,7 @@ jobs:
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: Test # Test needs to be finish before run this
-    runs-n: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
