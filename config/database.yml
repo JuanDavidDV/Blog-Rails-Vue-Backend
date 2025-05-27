@@ -82,6 +82,7 @@ production:
   primary: &primary_production
     <<: *default
     database: backend_production
+    url: <%= ENV['DATABASE_URL'] %>
     username: backend
     password: <%= ENV["BACKEND_DATABASE_PASSWORD"] %>
   cache:
