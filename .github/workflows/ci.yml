@@ -77,17 +77,21 @@ jobs:
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
-  Deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: test # Test needs to be finish before run this
-    runs-on: ubuntu-latest
+Deploy:
+  if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+  needs: test
+  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.14.15 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "blog-rails-vue-backend" #Must be unique in Heroku
-          heroku_email: "juandadazav@gmail.com"
-          usedocker: true
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Heroku
+      uses: heroku/actions/setup@v1
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+
+    - name: Deploy to Heroku
+      run: |
+        git remote add heroku https://git.heroku.com/blog-rails-vue-backend.git
+        git push heroku main
