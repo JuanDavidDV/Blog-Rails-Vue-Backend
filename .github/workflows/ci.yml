@@ -85,7 +85,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.14.15 # This is the action
+        uses: akhileshns/heroku-deploy@v4 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "blog-rails-vue-backend" #Must be unique in Heroku
