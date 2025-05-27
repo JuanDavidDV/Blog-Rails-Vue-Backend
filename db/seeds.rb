@@ -14,7 +14,7 @@ posts = [
 ]
 
 
-posts.each do |post| 
+posts.each do |post|
   Post.find_or_create_by!(title: post[:title]) do |a|
     a.body = post[:body]
   end
