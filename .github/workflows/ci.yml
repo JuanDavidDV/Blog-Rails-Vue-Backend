@@ -83,7 +83,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git config
+        run: |
+          git config --global user.email "${{ secrets.HEROKU_EMAIL }}"
+          git config --global user.name "GitHub Actions"
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.14.15
@@ -91,6 +97,5 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "blog-rails-vue-backend"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: false 
           dontautocreate: true
-
+          usedocker: false
