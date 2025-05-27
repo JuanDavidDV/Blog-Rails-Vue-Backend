@@ -78,17 +78,17 @@ jobs:
         run: bin/rails db:test:prepare test
 
   deploy:
-  if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-  needs: test
-  runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: test
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Deploy to Heroku
-      uses: heroku/deploy-via-git@v1
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: blog-rails-vue-backend
-        heroku_email: ${{ secrets.HEROKU_EMAIL }}
+      - name: Deploy to Heroku
+        uses: heroku/deploy-via-git@v1
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: blog-rails-vue-backend
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
