@@ -114,3 +114,11 @@ jobs:
 
       - name: Push to Heroku
         run: git push heroku main --force
+
+      - name: Trigger Frontend Deployment
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.FRONTEND_REPO_TOKEN }}
+          repository: JuanDavidDV/Blog-Rails-Vue-Frontend
+          event-type: trigger-frontend-deploy
+
